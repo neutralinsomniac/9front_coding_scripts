@@ -1,0 +1,28 @@
+#!/bin/rc
+rfork e
+
+ifs='
+'
+
+#switch ($#projdir) {
+#	case 0
+#		dir=.
+#	case *
+#		dir=$"projdir
+#}
+
+#files=`{>[2]/dev/null walk $dir |grep '.*\.[bcChlmsy]$|.*\.asm$|.*\.awk$|.*\.cc$|.*\.cgi$|.*\.cpp$|.*\.cs$|.*\.go$|.*\.goc$|.*\.java$|.*\.lx$|.*\.md$|.*\.ms$|.*\.pl$|.*\.py$|.*\.rc$|.*\.tex$|.*\.xy$' >[2]/dev/null}
+
+matches=`{>[2]/dev/null r git grep -npiE ''''^$"*^'''' '`git ls-files |grep ''.*\.[bcChlmsy]$|.*\.asm$|.*\.awk$|.*\.cc$|.*\.cgi$|.*\.cpp$|.*\.cs$|.*\.go$|.*\.goc$|.*\.java$|.*\.lx$|.*\.md$|.*\.ms$|.*\.pl$|.*\.py$|.*\.rc$|.*\.tex$|.*\.xy$''`'}
+
+switch ($#matches) {
+	case 0
+		echo no matches
+	case *
+		acme_savepos
+		echo '----------- gr '^$*^' -----------'
+		for (match in $matches) {
+			echo $match
+		}
+		#>[2]/dev/null g $* ($files)
+}

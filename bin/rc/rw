@@ -1,0 +1,17 @@
+#!/bin/rc
+
+. $home/bin/rc/host
+
+ifs='
+'
+
+echo -n $"* > /dev/label
+
+if (! ~ `{pwd} /mnt/term*) {
+	ssh $user@$host $"*
+}
+if not {
+	dir=`{pwd |sed -e 's/^\/mnt\/term//'}
+	ssh $user@$host 'cd '^$dir^'; '^$"*
+}
+read

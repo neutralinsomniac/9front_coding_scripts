@@ -1,0 +1,5 @@
+#!/bin/rc
+rfork e
+
+echo 'dot=addr' >/mnt/acme/$winid/ctl
+echo 'show' >/mnt/acme/$winid/ctl

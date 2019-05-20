@@ -1,0 +1,24 @@
+#!/bin/rc
+rfork e
+
+#old 9front-native way
+#files=`{>[2]/dev/null walk $dir |grep '.*\.py$' >[2]/dev/null}
+
+ifs='
+'
+
+matches=`{>[2]/dev/null r git grep -nE '''^[ 	]*(def|class)[ 	]+'^$"*^'\(''' '`git ls-files |grep ''.*\.py$''`'}
+
+acme_savepos
+
+switch ($#matches) {
+    case 0
+        echo no matches
+	case 1
+		B `{echo $matches(1) |sed 's/^(.*:[0-9]+):.*/\1/'}
+	case *
+	   echo ----------- gt $"* -----------
+		for (match in $matches) {
+			echo $match
+		}
+}

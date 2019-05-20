@@ -1,0 +1,12 @@
+#!/bin/rc
+
+. $home/bin/rc/host
+
+if (! ~ `{pwd} /mnt/term*) {
+	echo 'not in /mnt/term; exiting'
+	exit 1
+}
+
+dir=`{pwd |sed -e 's/^\/mnt\/term//'}
+echo '-------- MAKE --------'
+ssh $user@$host 'cd '^$dir^'; make '^$"*

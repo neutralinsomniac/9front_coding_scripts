@@ -1,0 +1,22 @@
+#!/bin/rc
+rfork e
+
+# old 9front-native way
+#files=`{>[2]/dev/null walk |grep '.*\.[cC]$|.*\.cc$|.*\.cpp$' >[2]/dev/null}
+
+ifs='
+'
+matches=`{>[2]/dev/null r git grep -nE '''^([^ 	]+[ 	]+)*([*]+[ 	]*)*'^$"*^'\(''' '`git ls-files |grep ''.*\.[cC]$''`'}
+
+acme_savepos
+
+switch ($#matches) {
+	case 0
+		echo no matches
+	case 1		
+		B `{echo $matches(1) |sed 's/^(.*:[0-9]+):.*/\1/'}
+	case *
+		for (match in $matches) {
+			echo $match
+		}
+}

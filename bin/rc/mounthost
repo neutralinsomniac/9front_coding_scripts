@@ -1,0 +1,5 @@
+#!/bin/rc
+
+. $home/bin/rc/host
+
+sshfs $user@net!$host!22

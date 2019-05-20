@@ -1,0 +1,11 @@
+#!/bin/rc
+
+. $home/bin/rc/host
+
+dir=`{echo $1 |sed -e 's/^\/mnt\/term//'}
+
+shift
+
+ssh $user@$host 'cd '^$dir^'; '^$"*
+echo '--------- done --------'
+read

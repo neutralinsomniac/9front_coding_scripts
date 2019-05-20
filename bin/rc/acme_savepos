@@ -1,0 +1,8 @@
+#!/bin/rc
+
+switch ($#winid) {
+	case 0
+	case *
+		if (test -w /mnt/acme/$winid/ctl)
+			echo 'addr=dot' >/mnt/acme/$winid/ctl
+}

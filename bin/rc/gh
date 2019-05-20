@@ -1,0 +1,20 @@
+#!/bin/rc
+rfork e
+
+ifs='
+'
+
+matches=`{>[2]/dev/null r git grep -nE '''^([^ 	]+[ 	]+)*([*]+[ 	]*)*'^$"*^'\(''' '`git ls-files |grep ''.*\.[hH]$''`'}
+
+acme_savepos
+
+switch ($#matches) {
+    case 0
+        echo no matches
+	case 1
+		B `{echo $matches(1) |sed 's/^(.*:[0-9]+):.*/\1/'}
+	case *
+		for (match in $matches) {
+			echo $match
+		}
+}

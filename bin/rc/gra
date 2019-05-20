@@ -1,0 +1,6 @@
+#!/bin/rc
+rfork e
+
+files = `{>[2]/dev/null walk |grep 'Makefile|config.mk$|.*\.[bcChlmsy]$|.*\.js$|.*\.md$|.*\.txt$|.*\.asm$|.*\.awk$|.*\.cc$|.*\.cgi$|.*\.cpp$|.*\.cs$|.*\.go$|.*\.goc$|.*\.java$|.*\.lx$|.*\.ms$|.*\.pl$|.*\.py$|.*\.rc$|.*\.tex$|.*\.xy$'}
+
+>[2]/dev/null g $1 ($files)

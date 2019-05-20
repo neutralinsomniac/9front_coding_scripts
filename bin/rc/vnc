@@ -1,0 +1,5 @@
+#!/bin/rc
+
+. $home/bin/rc/host
+
+vncv $host:1
