@@ -1,22 +1,29 @@
 #!/bin/rc
 rfork e
 
-# old 9front-native way
-#files=`{>[2]/dev/null walk |grep '.*\.[cC]$|.*\.cc$|.*\.cpp$' >[2]/dev/null}
-
 ifs='
 '
-matches=`{>[2]/dev/null r git grep -nE '''^([^ 	]+[ 	]+)*([*]+[ 	]*)*'^$"*^'\(''' '`git ls-files |grep ''.*\.[cC]$''`'}
 
-acme_savepos
+if(~ $#* 1) {
+        name=$"*
+}
+if not {
+        name=`{read}
+}
+if (! ~ $#name 1) {
+        echo nope
+        exit
+}
+
+matches=`{>[2]/dev/null r git grep -nE '''^([^ 	]+[ 	]+)*([*]+[ 	]*)*'^$"name^'\(''' '`git ls-files |grep ''.*\.[cC]$''`'}
 
 switch ($#matches) {
 	case 0
 		echo no matches
 	case 1		
-		B `{echo $matches(1) |sed 's/^(.*:[0-9]+):.*/\1/'}
+		plumb `{echo $matches(1) |sed 's/^(.*:[0-9]+):.*/\1/'}
 	case *
 		for (match in $matches) {
-			echo $match
+			echo `{pwd}^/$match
 		}
 }

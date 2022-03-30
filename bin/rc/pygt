@@ -7,7 +7,18 @@ rfork e
 ifs='
 '
 
-matches=`{>[2]/dev/null r git grep -nE '''^[ 	]*(def|class)[ 	]+'^$"*^'\(''' '`git ls-files |grep ''.*\.py$''`'}
+if(~ $#* 1) {
+        name=$"*
+}
+if not {
+        name=`{read}
+}
+if (! ~ $#name 1) {
+        echo nope
+        exit
+}
+
+matches=`{>[2]/dev/null r git grep -nE '''^[ 	]*(def|class)[ 	]+'^$"name^'\(''' '`git ls-files |grep ''.*\.py$''`'}
 
 acme_savepos
 
@@ -15,9 +26,8 @@ switch ($#matches) {
     case 0
         echo no matches
 	case 1
-		B `{echo $matches(1) |sed 's/^(.*:[0-9]+):.*/\1/'}
+		plumb `{echo $matches(1) |sed 's/^(.*:[0-9]+):.*/\1/'}
 	case *
-	   echo ----------- gt $"* -----------
 		for (match in $matches) {
 			echo $match
 		}
