@@ -26,4 +26,3 @@ These are designed to be run under a git repo, since that's what I'm interacting
 * rdir - ssh to host, cd to $1, run $2, wait for <enter> (used with my git plumbing rule)
 * rw - ssh to host, cd to /mnt/term directory (if currently in a /mnt/term directory), run command, wait for <enter> (used with my manpage plumbing rule)
 * vnc - vnc to host
-* walk - 9-native recursive directory listing
