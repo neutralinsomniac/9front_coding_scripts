@@ -4,25 +4,25 @@ rfork e
 ifs='
 '
 
-#switch ($#projdir) {
-#	case 0
-#		dir=.
-#	case *
-#		dir=$"projdir
-#}
+if(~ $#* 1) {
+        name=$"*
+}
+if not {
+        name=`{read}
+}
+if (! ~ $#name 1) {
+        echo nope
+        exit
+}
 
-#files=`{>[2]/dev/null walk $dir |grep '.*\.[bcChlmsy]$|.*\.asm$|.*\.awk$|.*\.cc$|.*\.cgi$|.*\.cpp$|.*\.cs$|.*\.go$|.*\.goc$|.*\.java$|.*\.lx$|.*\.md$|.*\.ms$|.*\.pl$|.*\.py$|.*\.rc$|.*\.tex$|.*\.xy$' >[2]/dev/null}
-
-matches=`{>[2]/dev/null r git grep -npiE ''''^$"*^'''' '`git ls-files |grep ''.*\.[bcChlmsy]$|.*\.asm$|.*\.awk$|.*\.cc$|.*\.cgi$|.*\.cpp$|.*\.cs$|.*\.go$|.*\.goc$|.*\.java$|.*\.lx$|.*\.md$|.*\.ms$|.*\.pl$|.*\.py$|.*\.rc$|.*\.tex$|.*\.xy$''`'}
+matches=`{>[2]/dev/null r git grep -npiE ''''^$"name^'''' '`git ls-files |grep ''.*\.[bcChlmsy]$|.*\.asm$|.*\.awk$|.*\.cc$|.*\.cgi$|.*\.cpp$|.*\.cs$|.*\.go$|.*\.goc$|.*\.java$|.*\.lx$|.*\.md$|.*\.ms$|.*\.pl$|.*\.py$|.*\.rc$|.*\.tex$|.*\.xy$|.*\.mk$|.*\.s$''`'}
 
 switch ($#matches) {
 	case 0
 		echo no matches
 	case *
-		acme_savepos
-		echo '----------- gr '^$*^' -----------'
+		pwd=`{pwd}
 		for (match in $matches) {
-			echo $match
+			echo $pwd^/^$match
 		}
-		#>[2]/dev/null g $* ($files)
 }
